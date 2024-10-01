@@ -1,7 +1,7 @@
 // McGee Power Plan.cpp : Defines the entry point for the console application.
 //
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <Windows.h>
 #include <iostream>
 #include <string>
@@ -179,7 +179,7 @@ void DeleteOldMcGeeScheme() {
 
 	PowerDeleteScheme PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerDeleteScheme)GetProcAddress(dll, "PowerDeleteScheme");
 		if (NULL != PowerFunc) {
@@ -188,11 +188,11 @@ void DeleteOldMcGeeScheme() {
 			PowerFunc(NULL, &oldMcGeePlan);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerDeleteScheme' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 }
 
@@ -202,18 +202,18 @@ void ReplaceDefaultSchemes() {
 
 	PowerReplaceDefaultPowerSchemes PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerReplaceDefaultPowerSchemes)GetProcAddress(dll, "PowerReplaceDefaultPowerSchemes");
 		if (NULL != PowerFunc) {
 			PowerFunc();
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerReplaceDefaultPowerSchemes' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 }
 
@@ -223,18 +223,18 @@ void RestoreDefaultSchemes() {
 
 	PowerRestoreDefaultPowerSchemes PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerRestoreDefaultPowerSchemes)GetProcAddress(dll, "PowerRestoreDefaultPowerSchemes");
 		if (NULL != PowerFunc) {
 			PowerFunc();
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerRestoreDefaultPowerSchemes' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 }
 
@@ -258,18 +258,18 @@ GUID GetActivePowerScheme() {
 
 	PowerGetActiveScheme PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerGetActiveScheme)GetProcAddress(dll, "PowerGetActiveScheme");
 		if (NULL != PowerFunc) {
 			PowerFunc(NULL, ptr1);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerGetActiveScheme' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 
 	return *ptr2;
@@ -291,23 +291,23 @@ wchar_t* GetCurrentSchemeName() {
 	DWORD NameSize = sizeof(wchar_t[50]);
 	DWORD result;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerReadFriendlyName)GetProcAddress(dll, "PowerReadFriendlyName");
 		if (NULL != PowerFunc) {
 			const GUID activeScheme = GetActivePowerScheme();
 			result = PowerFunc(NULL, &activeScheme, NULL, NULL, (UCHAR*)wName, &NameSize);
 
-			cout << result << endl;
-			wcout << wName << endl;
+			//cout << result << endl;
+			//wcout << wName << endl;
 			return wName;
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerReadFriendlyName' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 	return NULL;
 }
@@ -335,18 +335,18 @@ GUID DuplicateScheme(GUID SourceSchemeGuid) {
 
 	PowerDuplicateScheme PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerDuplicateScheme)GetProcAddress(dll, "PowerDuplicateScheme");
 		if (NULL != PowerFunc) {
 			PowerFunc(NULL, &SourceSchemeGuid, ptr1);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerDuplicateScheme' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 
 	return *ptr2;
@@ -361,7 +361,7 @@ void SetActivePowerScheme(GUID scheme) {
 
 	PowerSetActiveScheme PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerSetActiveScheme)GetProcAddress(dll, "PowerSetActiveScheme");
 		if (NULL != PowerFunc) {
@@ -369,11 +369,11 @@ void SetActivePowerScheme(GUID scheme) {
 			PowerFunc(NULL, &myScheme);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerSetActiveScheme' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 }
 
@@ -390,7 +390,7 @@ void WriteSchemeName() {
 
 	PowerWriteFriendlyName PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerWriteFriendlyName)GetProcAddress(dll, "PowerWriteFriendlyName");
 		if (NULL != PowerFunc) {
@@ -398,11 +398,11 @@ void WriteSchemeName() {
 			PowerFunc(NULL, &myScheme, NULL, NULL, (UCHAR*)L"McGee Power Scheme", 18*2);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerWriteFriendlyName' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 }
 
@@ -419,7 +419,7 @@ void WriteSchemeDescription() {
 
 	PowerWriteDescription PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerWriteDescription)GetProcAddress(dll, "PowerWriteDescription");
 		if (NULL != PowerFunc) {
@@ -427,11 +427,11 @@ void WriteSchemeDescription() {
 			PowerFunc(NULL, &myScheme, NULL, NULL, (UCHAR*)L"Prevents sleep on closing the lid.", 34*2);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerWriteDescription' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 };
 
@@ -447,7 +447,7 @@ void WriteAcPwrLidCloseAction() {
 
 	PowerWriteACDefaultIndex PowerFunc;
 
-	HMODULE dll = LoadLibraryA("POWRPROF.DLL");
+	HMODULE dll = LoadLibraryA("PowrProf.dll");
 	if (NULL != dll) {
 		PowerFunc = (PowerWriteACDefaultIndex)GetProcAddress(dll, "PowerWriteACDefaultIndex");
 		if (NULL != PowerFunc) {
@@ -458,11 +458,11 @@ void WriteAcPwrLidCloseAction() {
 			PowerFunc(NULL, &McGScheme/*McGee Power Scheme*/, &GUID_SYSTEM_BUTTON_SUBGROUP, &GUID_LIDCLOSE_ACTION, 0);
 		}
 		else {
-			cout << "I can't load this function";
+			cout << "Error: Failed to load 'PowerWriteACDefaultIndex' function." << endl;
 		}
 	}
 	else {
-		cout << "I can't load this dll file";
+		cout << "Error: Failed to load 'PowrProf.dll' library." << endl;
 	}
 };
 
@@ -483,7 +483,7 @@ int main()
 	// 2. If the McGee Power Scheme is the current scheme, do nothing. If not, continue to step 3.
 	wchar_t *CurrentSchemeName = GetCurrentSchemeName();
 	if (wcscmp(CurrentSchemeName, L"McGee Power Scheme") == 0) {
-		cout << "McGee Power Scheme is already the default active scheme. Nothing to run.";
+		cout << "McGee Power Scheme is already the default active scheme. Nothing to run." << endl;
 		// Prevent console window closing
 			//cin.get();
 
@@ -506,8 +506,8 @@ int main()
 		ReplaceDefaultSchemes();
 	}
 	
-	// Prevent console window closing
-		//cin.get();
+	cout << "Process complete. Press 'Enter' to exit...";
+	cin.get(); // Prevent console window closing
 
 	return 0;
 }
